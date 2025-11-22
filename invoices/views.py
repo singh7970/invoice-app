@@ -3,31 +3,41 @@ import datetime
 from .models import Invoice, Sender, Client, Product
 from .forms import InvoiceForm, LineItemFormSet, SenderForm, ClientForm, ProductForm
 
-def master_data(request):
+def master_dashboard(request):
+    return render(request, 'invoices/master_dashboard.html')
+
+def sender_list(request):
     senders = Sender.objects.all()
-    clients = Client.objects.all()
-    products = Product.objects.all()
-    
     if request.method == 'POST':
-        if 'add_sender' in request.POST:
-            form = SenderForm(request.POST)
-            if form.is_valid(): form.save()
-        elif 'add_client' in request.POST:
-            form = ClientForm(request.POST)
-            if form.is_valid(): form.save()
-        elif 'add_product' in request.POST:
-            form = ProductForm(request.POST)
-            if form.is_valid(): form.save()
-        return redirect('master_data')
-        
-    return render(request, 'invoices/master_data.html', {
-        'senders': senders,
-        'clients': clients,
-        'products': products,
-        'sender_form': SenderForm(),
-        'client_form': ClientForm(),
-        'product_form': ProductForm(),
-    })
+        form = SenderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('sender_list')
+    else:
+        form = SenderForm()
+    return render(request, 'invoices/sender_list.html', {'senders': senders, 'form': form})
+
+def client_list(request):
+    clients = Client.objects.all()
+    if request.method == 'POST':
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('client_list')
+    else:
+        form = ClientForm()
+    return render(request, 'invoices/client_list.html', {'clients': clients, 'form': form})
+
+def product_list(request):
+    products = Product.objects.all()
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = ProductForm()
+    return render(request, 'invoices/product_list.html', {'products': products, 'form': form})
 
 def create_invoice(request):
     if request.method == 'POST':

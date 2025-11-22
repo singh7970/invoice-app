@@ -1,0 +1,30 @@
+{% extends 'invoices/base.html' %}
+
+{% block title %}Master Data Dashboard{% endblock %}
+
+{% block content %}
+<div class="card" style="text-align: center; padding: 4rem 2rem;">
+    <h1>Master Data Management</h1>
+    <p style="color: var(--text-muted); margin-bottom: 3rem;">Select a category to manage</p>
+
+    <div class="grid-3">
+        <a href="{% url 'sender_list' %}" class="card"
+            style="text-decoration: none; border: 1px solid var(--border); transition: transform 0.2s;">
+            <h2 style="margin-bottom: 0.5rem;">Senders</h2>
+            <p style="color: var(--text-muted);">Manage your business details</p>
+        </a>
+
+        <a href="{% url 'client_list' %}" class="card"
+            style="text-decoration: none; border: 1px solid var(--border); transition: transform 0.2s;">
+            <h2 style="margin-bottom: 0.5rem;">Clients</h2>
+            <p style="color: var(--text-muted);">Manage customer details</p>
+        </a>
+
+        <a href="{% url 'product_list' %}" class="card"
+            style="text-decoration: none; border: 1px solid var(--border); transition: transform 0.2s;">
+            <h2 style="margin-bottom: 0.5rem;">Products</h2>
+            <p style="color: var(--text-muted);">Manage items and rates</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

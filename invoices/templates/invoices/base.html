@@ -17,7 +17,7 @@
             </a>
             <div class="navbar-links">
                 <a href="{% url 'create_invoice' %}" class="btn btn-secondary btn-sm">Home</a>
-                <a href="{% url 'master_data' %}" class="btn btn-secondary btn-sm">Master Data</a>
+                <a href="{% url 'master_dashboard' %}" class="btn btn-secondary btn-sm">Master Data</a>
                 {% if request.resolver_match.url_name != 'create_invoice' %}
                 <button onclick="history.back()" class="btn btn-secondary btn-sm">Back</button>
                 {% endif %}
