@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Invoice App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <nav class="navbar no-print">
+        <div class="container navbar-content">
+            <a href="{% url 'create_invoice' %}" class="navbar-brand">
+                Invoice App
+            </a>
+            <div class="navbar-links">
+                <a href="{% url 'create_invoice' %}" class="btn btn-secondary btn-sm">Home</a>
+                <a href="{% url 'master_data' %}" class="btn btn-secondary btn-sm">Master Data</a>
+                {% if request.resolver_match.url_name != 'create_invoice' %}
+                <button onclick="history.back()" class="btn btn-secondary btn-sm">Back</button>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
+</html>

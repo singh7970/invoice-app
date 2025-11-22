@@ -1,0 +1,87 @@
+{% extends 'invoices/base.html' %}
+
+{% block title %}Invoice #{{ invoice.invoice_number }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="invoice-header">
+        <div>
+            <h1>INVOICE</h1>
+            <p class="text-secondary">#{{ invoice.invoice_number }}</p>
+            <p class="text-secondary">Date: {{ invoice.invoice_date }}</p>
+        </div>
+        <div class="text-right">
+            <h2>{{ invoice.sender_name }}</h2>
+            <p>{{ invoice.sender_address }}</p>
+            <p>{{ invoice.get_sender_state_display }}</p>
+            {% if invoice.sender_gstin %}
+            <p>GSTIN: {{ invoice.sender_gstin }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 3rem;">
+        <div>
+            <h3 class="text-secondary" style="font-size: 0.875rem; text-transform: uppercase;">Bill To</h3>
+            <p class="font-bold">{{ invoice.client_name }}</p>
+            <p>{{ invoice.client_address }}</p>
+            <p>{{ invoice.get_client_state_display }}</p>
+            {% if invoice.client_gstin %}
+            <p>GSTIN: {{ invoice.client_gstin }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <table class="invoice-table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th class="text-right">Qty</th>
+                <th class="text-right">Rate</th>
+                {% if invoice.is_gst_applicable %}
+                <th class="text-right">Tax Rate</th>
+                <th class="text-right">Tax Amount</th>
+                {% endif %}
+                <th class="text-right">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.description }}</td>
+                <td class="text-right">{{ item.quantity }}</td>
+                <td class="text-right">₹{{ item.rate }}</td>
+                {% if invoice.is_gst_applicable %}
+                <td class="text-right">{{ item.tax_rate }}%</td>
+                <td class="text-right">₹{{ item.tax_amount|floatformat:2 }}</td>
+                {% endif %}
+                <td class="text-right">₹{{ item.amount|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="invoice-totals">
+        <div class="total-row">
+            <span>Subtotal</span>
+            <span>₹{{ subtotal|floatformat:2 }}</span>
+        </div>
+        {% if invoice.is_gst_applicable %}
+        <div class="total-row">
+            <span>Tax ({{ tax_type }})</span>
+            <span>₹{{ total_tax|floatformat:2 }}</span>
+        </div>
+        {% endif %}
+        <div class="total-row final">
+            <span>Total</span>
+            <span>₹{{ grand_total|floatformat:2 }}</span>
+        </div>
+    </div>
+
+    <div class="no-print" style="margin-top: 3rem; text-align: center;">
+        <button onclick="window.print()" class="btn btn-primary">Print Invoice</button>
+        <a href="{% url 'create_invoice' %}" class="btn btn-secondary"
+            style="margin-left: 1rem; text-decoration: none;">Create New</a>
+    </div>
+</div>
+{% endblock %}

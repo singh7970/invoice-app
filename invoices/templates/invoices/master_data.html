@@ -1,0 +1,119 @@
+{% extends 'invoices/base.html' %}
+
+{% block title %}Master Data{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1>Master Data</h1>
+    <a href="{% url 'create_invoice' %}" class="btn btn-secondary">Back to Invoice</a>
+</div>
+
+<div class="grid-3">
+    <!-- Senders -->
+    <div class="card">
+        <h2>Senders</h2>
+        <form method="post" style="margin-bottom: 2rem;">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Name</label>
+                {{ sender_form.name }}
+            </div>
+            <div class="form-group">
+                <label>Address</label>
+                {{ sender_form.address }}
+            </div>
+            <div class="form-group">
+                <label>State</label>
+                {{ sender_form.state }}
+            </div>
+            <div class="form-group">
+                <label>GSTIN</label>
+                {{ sender_form.gstin }}
+            </div>
+            <button type="submit" name="add_sender" class="btn btn-primary" style="width: 100%;">Add Sender</button>
+        </form>
+
+        <h3>Saved Senders</h3>
+        <ul style="list-style: none; padding: 0;">
+            {% for sender in senders %}
+            <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border); color: var(--text-muted);">
+                <strong>{{ sender.name }}</strong><br>
+                <small>{{ sender.get_state_display }}</small>
+            </li>
+            {% empty %}
+            <li style="color: var(--text-muted);">No senders saved.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Clients -->
+    <div class="card">
+        <h2>Clients</h2>
+        <form method="post" style="margin-bottom: 2rem;">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Name</label>
+                {{ client_form.name }}
+            </div>
+            <div class="form-group">
+                <label>Address</label>
+                {{ client_form.address }}
+            </div>
+            <div class="form-group">
+                <label>State</label>
+                {{ client_form.state }}
+            </div>
+            <div class="form-group">
+                <label>GSTIN</label>
+                {{ client_form.gstin }}
+            </div>
+            <button type="submit" name="add_client" class="btn btn-primary" style="width: 100%;">Add Client</button>
+        </form>
+
+        <h3>Saved Clients</h3>
+        <ul style="list-style: none; padding: 0;">
+            {% for client in clients %}
+            <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border); color: var(--text-muted);">
+                <strong>{{ client.name }}</strong><br>
+                <small>{{ client.get_state_display }}</small>
+            </li>
+            {% empty %}
+            <li style="color: var(--text-muted);">No clients saved.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Products -->
+    <div class="card">
+        <h2>Products</h2>
+        <form method="post" style="margin-bottom: 2rem;">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Description</label>
+                {{ product_form.description }}
+            </div>
+            <div class="form-group">
+                <label>Rate</label>
+                {{ product_form.rate }}
+            </div>
+            <div class="form-group">
+                <label>Tax Rate (%)</label>
+                {{ product_form.tax_rate }}
+            </div>
+            <button type="submit" name="add_product" class="btn btn-primary" style="width: 100%;">Add Product</button>
+        </form>
+
+        <h3>Saved Products</h3>
+        <ul style="list-style: none; padding: 0;">
+            {% for product in products %}
+            <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border); color: var(--text-muted);">
+                <strong>{{ product.description }}</strong><br>
+                <small>₹{{ product.rate }} ({{ product.tax_rate }}%)</small>
+            </li>
+            {% empty %}
+            <li style="color: var(--text-muted);">No products saved.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
