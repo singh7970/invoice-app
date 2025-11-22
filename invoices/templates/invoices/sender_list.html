@@ -1,16 +1,16 @@
 {% extends 'invoices/base.html' %}
 
-{% block title %}Manage Senders{% endblock %}
+{% block title %}Manage Sellers{% endblock %}
 
 {% block content %}
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-    <h1>Manage Senders</h1>
+    <h1>Manage Sellers</h1>
     <a href="{% url 'master_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
 </div>
 
 <div class="grid-2">
     <div class="card">
-        <h2>Add New Sender</h2>
+        <h2>Add New Seller</h2>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -29,12 +29,12 @@
                 <label>GSTIN</label>
                 {{ form.gstin }}
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Save Sender</button>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Save Seller</button>
         </form>
     </div>
 
     <div class="card">
-        <h2>Saved Senders</h2>
+        <h2>Saved Sellers</h2>
         <div style="overflow-x: auto;">
             <table class="invoice-table">
                 <thead>
@@ -53,7 +53,7 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="3" style="text-align: center;">No senders saved.</td>
+                        <td colspan="3" style="text-align: center;">No sellers saved.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
